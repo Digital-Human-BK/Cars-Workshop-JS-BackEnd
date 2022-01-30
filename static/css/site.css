@@ -19,6 +19,7 @@ img.cube {
     display: block;
     margin: 0 auto;
     text-align: center;
+    margin-bottom: 15px;
 }
 
 img.logo {
@@ -69,6 +70,7 @@ h1 {
 }
 
 div.cube {
+    text-align: center;
     display: inline-block;
     border: 1px solid #2b415433;
     background: white;
@@ -98,12 +100,37 @@ button, main a.btn {
     text-decoration: none;
     display: inline-block;
     font-size: 18px;
-    width: 43%;
+    width: 70%;
     margin: 12px;
-    margin-left: 6%;
     border-radius: 4px;
     background: #607588;
     color: white;
+}
+
+.control {
+    text-align: center;
+}
+
+a.controls {
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    width: 25%;
+    margin: 12px;
+    border-radius: 4px;
+    background: #607588;
+    color: white;
+}
+
+a.edit {
+    background-color: #3AAF85;
+}
+
+a.delete {
+    background-color: #EF5542;
 }
 
 button:hover {
@@ -149,6 +176,7 @@ div.about a {
 }
 
 form label {
+    text-align: center;
     background: #607588;
     color: white;
     padding: 12px;

@@ -1,10 +1,13 @@
 {{#with car}}
 <h1>{{name}}</h1>
-<img class="cube"
-  src="/static/assets/{{imageUrl}}">
+<img class="cube" src="/static/assets/{{imageUrl}}">
 <div class="details">
   <p><span>Description:</span>{{description}}</p>
   <p><span>Price:</span>{{price}} $</p>
-  <a class="btn" href="/">Back</a>
+  <div class="control">
+    <a class="controls" href="/">Back</a>
+    <a class="controls edit" href="/edit/{{id}}">Edit</a>
+    <a class="controls delete" href="/delete/{{id}}">Delete</a>
+  </div>
 </div>
 {{/with}}

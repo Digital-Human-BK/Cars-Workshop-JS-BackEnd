@@ -7,14 +7,16 @@
 // [x] read all
 // [x] read one by Id
 // [x] create
-// [] edit
-// [] delete
+// [x] edit
+// [x] delete
 // [x] search
 // --> implrement controllers
 // [x] home(catalog)
 // [x] about
 // [x] details
 // [x] create
+// [x] delete
+// [x] edit
 // [x] improved home (search)
 
 const express = require('express');
@@ -25,6 +27,8 @@ const { home } = require('./controllers/home');
 const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const create = require('./controllers/create');
+const del = require('./controllers/delete');
+const edit = require('./controllers/edit');
 const { notFound } = require('./controllers/notFound');
 
 const app = express();
@@ -42,7 +46,18 @@ app.use(carsService());
 app.get('/', home);
 app.get('/about', about);
 app.get('/details/:id', details);
-app.route('/create').get(create.get).post(create.post);
+
+app.route('/create')
+  .get(create.get)
+  .post(create.post);
+
+app.route('/delete/:id')
+  .get(del.get)
+  .post(del.post);
+
+app.route('/edit/:id')
+  .get(edit.get)
+  .post(edit.post);
 
 app.all('*', notFound);
 
