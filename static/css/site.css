@@ -133,6 +133,20 @@ a.delete {
     background-color: #EF5542;
 }
 
+a.attach {
+    border: none;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    width: 80%;
+    margin: 12px auto;
+    border-radius: 4px;
+    background: #caa500;
+    color: white;
+}
+
 button:hover {
     background-color: #0B2133;
     color: white;

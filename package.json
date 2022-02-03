@@ -19,7 +19,8 @@
   "homepage": "https://github.com/Digital-Human-BK/Cars-Workshop-JS-BackEnd#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2"
+    "express-handlebars": "^6.0.2",
+    "mongoose": "^6.1.10"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

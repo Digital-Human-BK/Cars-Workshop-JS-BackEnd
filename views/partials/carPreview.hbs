@@ -2,6 +2,6 @@
   <img class="cube"
     src="/static/assets/{{imageUrl}}">
   <p class="name">{{name}}</p>
-  <p><span>Price:</span>{{price}} $</p>
+  <p><span>Price:</span>{{#if price}}{{price}} ${{else}}Make an offer!{{/if}}</p>
   <a class="btn" href="/details/{{id}}">Details</a>
 </div>

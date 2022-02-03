@@ -20,6 +20,7 @@ module.exports = {
       await req.storage.deleteCarById(id)
       res.redirect('/');
     } catch (error) {
+      console.log('Attempted to delete non-existent Id', id);
       res.redirect('/404');
     }
   }

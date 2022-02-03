@@ -2,13 +2,13 @@
 <h1>Edit Listing</h1>
 <div class="form">
   <form action="/edit/{{id}}" method="POST">
-    <label for="name">&#160;&#160;&#160;Car Title&#160;&#160;&#160;</label>
+    <label for="name">Car Title</label>
     <input type="text" id="name" name="name" value="{{name}}">
     <label for="description">Description</label>
     <textarea id="description" name="description">{{description}}</textarea>
-    <label for="image">&#160;Image Url&#160;</label>
+    <label for="image">Image Url</label>
     <input type="text" id="image" name="imageUrl" value="{{imageUrl}}">
-    <label for="price">&#160;&#160;&#160;&#160;&#160;Price&#160;&#160;&#160;&#160;&#160;</label>
+    <label for="price">Price</label>
     <input type="number" name="price" id="price" value="{{price}}">    
     <input type="submit" value="Save Changes">
   </form>

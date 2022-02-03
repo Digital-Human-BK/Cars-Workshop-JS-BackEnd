@@ -19,7 +19,7 @@ module.exports = {
     const car = {
       name: req.body.name,
       description: req.body.description,
-      imageUrl: req.body.imageUrl,
+      imageUrl: req.body.imageUrl || undefined,
       price: Number(req.body.price)
     }
     
@@ -27,6 +27,7 @@ module.exports = {
       await req.storage.updateCarById(id, car);
       res.redirect('/');
     } catch (error) {
+      console.log(error.message);
       res.redirect('/404');
     }
   }
