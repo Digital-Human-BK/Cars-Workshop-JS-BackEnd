@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const accessorySchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, default: '' },
-  imageUrl: { type: String, default: 'default.jpg' },
+  imageUrl: { type: String, default: 'noImage.png' },
   price: { type: Number, min: 0 }
 });
 

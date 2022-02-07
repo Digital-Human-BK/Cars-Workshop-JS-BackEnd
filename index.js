@@ -4,6 +4,7 @@
 // [x] create home controller 
 // [x] bind routing  
 // [x] create layout 
+
 // --> create data service
 // [x] read all
 // [x] read one by Id
@@ -15,6 +16,12 @@
 // [x] accessory read
 // [x] accessory create
 // [x] accessory attach
+// v1.2
+// [ ] register user
+// [ ] login user
+// [ ] logout user
+// [ ] add authorization checks to data modification
+
 // --> implrement controllers
 // [x] home(catalog)
 // [x] about
@@ -27,13 +34,21 @@
 // [x] create accessory
 // [x] attach accessory to car
 // [x] update details to include accessory
+// v1.2
+// [ ] auth controler for login/register/logout
+// [ ] protect routes
+
 // --> database
 // [x] add database connection
 // [x] create Car model
 // [x] upgrade car service to use Car model
 // [x] add validation rules to Car model
-//  v1.1
+// v1.1
 // [x] create Accessory model
+// v1.2 
+// [ ] add session middleware nad auth lib
+// [ ] create user model
+// [ ] add owner property to Car, Accessory models
 
 //imports
 // -- third party modules
@@ -45,6 +60,7 @@ const initDb = require('./models/index');
 
 const carsService = require('./services/cars');
 const accessoryService = require('./services/accessory');
+const authService = require('./services/auth');
 
 // --- actions
 const { home } = require('./controllers/home');
@@ -55,6 +71,7 @@ const del = require('./controllers/delete');
 const edit = require('./controllers/edit');
 const accessory = require('./controllers/accessory');
 const attachAccessory = require('./controllers/attachAccessory');
+const auth = require('./controllers/auth');
 const { notFound } = require('./controllers/notFound');
 
 start();
@@ -77,6 +94,7 @@ async function start() {
   // data service
   app.use(carsService());
   app.use(accessoryService());
+  app.use(authService());
 
   //route controllers
   app.get('/', home);
@@ -102,6 +120,16 @@ async function start() {
   app.route('/attach/:id')
     .get(attachAccessory.get)
     .post(attachAccessory.post);
+
+  app.route('/register')
+    .get(auth.registerGet)
+    .post(auth.registerPost);
+  
+  app.route('/login')
+    .get(auth.loginGet)
+    .post(auth.loginPost)
+  
+  app.get('/logout', auth.logoutGet);
 
   app.all('*', notFound);
 
