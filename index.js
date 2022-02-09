@@ -46,14 +46,15 @@
 // v1.1
 // [x] create Accessory model
 // v1.2 
-// [ ] add session middleware nad auth lib
-// [ ] create user model
+// [x] add session middleware nad auth lib
+// [x] create user model
 // [ ] add owner property to Car, Accessory models
 
 //imports
 // -- third party modules
 const express = require('express');
 const hbs = require('express-handlebars');
+const session = require('express-session');
 
 // -- local modules
 const initDb = require('./models/index');
@@ -87,6 +88,12 @@ async function start() {
   }).engine);
   app.set('view engine', '.hbs');
 
+  app.use(session({
+    secret: 'super duper secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: 'auto' }
+  }));
   app.use(express.urlencoded({ extended: true }));
   app.use('/static', express.static('static'));
 
@@ -124,11 +131,11 @@ async function start() {
   app.route('/register')
     .get(auth.registerGet)
     .post(auth.registerPost);
-  
+
   app.route('/login')
     .get(auth.loginGet)
     .post(auth.loginPost)
-  
+
   app.get('/logout', auth.logoutGet);
 
   app.all('*', notFound);
