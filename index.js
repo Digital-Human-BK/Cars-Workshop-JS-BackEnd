@@ -17,10 +17,10 @@
 // [x] accessory create
 // [x] accessory attach
 // v1.2
-// [ ] register user
-// [ ] login user
-// [ ] logout user
-// [ ] add authorization checks to data modification
+// [x] register user
+// [x] login user
+// [x] logout user
+// [x] add authorization checks to data modification
 
 // --> implrement controllers
 // [x] home(catalog)
@@ -35,8 +35,9 @@
 // [x] attach accessory to car
 // [x] update details to include accessory
 // v1.2
-// [ ] auth controler for login/register/logout
-// [ ] protect routes
+// [x] auth controler for login/register/logout
+// [x] protect routes
+// [x] only show edit buttons to record owner
 
 // --> database
 // [x] add database connection
@@ -48,7 +49,7 @@
 // v1.2 
 // [x] add session middleware nad auth lib
 // [x] create user model
-// [ ] add owner property to Car, Accessory models
+// [x] add owner property to Car, Accessory models
 
 //imports
 // -- third party modules
@@ -62,6 +63,7 @@ const initDb = require('./models/index');
 const carsService = require('./services/cars');
 const accessoryService = require('./services/accessory');
 const authService = require('./services/auth');
+const { isLoggedIn } = require('./services/util');
 
 // --- actions
 const { home } = require('./controllers/home');
@@ -109,24 +111,24 @@ async function start() {
   app.get('/details/:id', details);
 
   app.route('/create')
-    .get(create.get)
-    .post(create.post);
+    .get(isLoggedIn(), create.get)
+    .post(isLoggedIn(), create.post);
 
   app.route('/delete/:id')
-    .get(del.get)
-    .post(del.post);
+    .get(isLoggedIn(), del.get)
+    .post(isLoggedIn(), del.post);
 
   app.route('/edit/:id')
-    .get(edit.get)
-    .post(edit.post);
+    .get(isLoggedIn(), edit.get)
+    .post(isLoggedIn(), edit.post);
 
   app.route('/accessory')
-    .get(accessory.get)
-    .post(accessory.post);
+    .get(isLoggedIn(), accessory.get)
+    .post(isLoggedIn(), accessory.post);
 
   app.route('/attach/:id')
-    .get(attachAccessory.get)
-    .post(attachAccessory.post);
+    .get(isLoggedIn(), attachAccessory.get)
+    .post(isLoggedIn(), attachAccessory.post);
 
   app.route('/register')
     .get(auth.registerGet)

@@ -6,8 +6,10 @@
   <p><span>Price:</span>{{#if price}}{{price}} ${{else}}Make an offer!{{/if}}</p>
   <div class="control">
     <a class="controls" href="/">Back</a>
+    {{#if isOwner}}
     <a class="controls edit" href="/edit/{{id}}">Edit</a>
     <a class="controls delete" href="/delete/{{id}}">Delete</a>
+    {{/if}}
   </div>
   <a class="attach" href="/attach/{{id}}">Attach Accessory</a>
 </div>

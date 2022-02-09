@@ -3,12 +3,17 @@ module.exports = {
     const id = req.params.id;
     const car = await req.storage.getCarById(id);
 
-    res.locals = {
+    if (car.owner != req.session.user.id) {
+      console.log('User is not owner');
+      return res.redirect('/login');
+    }
+
+    if (car) {
+      res.render('delete',{
       title: `Delete | ${car.name}`,
       car
-    }
-    if (car) {
-      res.render('delete');
+    });
+    
     } else {
       res.redirect('/404');
     }
@@ -17,8 +22,11 @@ module.exports = {
     const id = req.params.id;
 
     try {
-      await req.storage.deleteCarById(id)
-      res.redirect('/');
+      if (await req.storage.deleteCarById(id, req.session.user.id)) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      };
     } catch (error) {
       console.log('Attempted to delete non-existent Id', id);
       res.redirect('/404');

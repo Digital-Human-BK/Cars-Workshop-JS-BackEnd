@@ -8,6 +8,11 @@ module.exports = {
         req.accessory.getAllAccessories(),
       ]);
 
+      if (car.owner != req.session.user.id) {
+        console.log('User is not owner');
+        return res.redirect('/login');
+      }
+
       const existingIds = car.accessories.map(a => a.id.toString());
       const availableAcc = accessories.filter(a => existingIds.includes(a.id.toString()) == false);
 
@@ -21,9 +26,11 @@ module.exports = {
     const accessoryId = req.body.accessory;
 
     try {
-      await req.storage.attachAccessory(carId, accessoryId);
-
-      res.redirect('/');
+      if (await req.storage.attachAccessory(carId, accessoryId, req.session.user.id)) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      };
     } catch (e) {
       console.log('Error attaching accessory');
       console.log(e.message);

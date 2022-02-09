@@ -16,7 +16,6 @@ async function register(session, username, password) {
 
 async function login(session, username, password) {
   const user = await User.findOne({ username });
-  console.log(user);
 
   if(user && await user.comparePassword(password)) {
 
@@ -31,10 +30,20 @@ async function login(session, username, password) {
   }
 }
 
+function logout(session){
+  delete session.user;
+}
+
 module.exports = () => (req, res, next) => {
+  if(req.session.user) {
+    res.locals.user = req.session.user;
+    res.locals.hasUser = true;
+  }
+
   req.auth = {
     register: (...params) => register(req.session, ...params),
-    login: (...params) => login(req.session, ...params)
+    login: (...params) => login(req.session, ...params),
+    logout: () => logout(req.session)
   };
 
   next();

@@ -1,5 +1,5 @@
 module.exports = {
   about(req, res) {
-    res.render('about');
+    res.render('about', {title: 'About CarZone'});
   }
 };

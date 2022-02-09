@@ -3,12 +3,16 @@ module.exports = {
     const id = req.params.id;
     const car = await req.storage.getCarById(id);
 
-    res.locals = {
-      title: `Edit | ${car.name}`,
-      car
+    if (car.owner != req.session.user.id) {
+      console.log('User is not owner');
+      return res.redirect('/login');
     }
+
     if (car) {
-      res.render('edit');
+      res.render('edit', {
+        title: `Edit | ${car.name}`,
+        car
+      });
     } else {
       res.redirect('/404');
     }
@@ -22,10 +26,14 @@ module.exports = {
       imageUrl: req.body.imageUrl || undefined,
       price: Number(req.body.price)
     }
-    
+
     try {
-      await req.storage.updateCarById(id, car);
-      res.redirect('/');
+      if (await req.storage.updateCarById(id, car, req.session.user.id)) {
+        res.redirect('/');
+      } else {
+        res.redirect('/login');
+      };
+
     } catch (error) {
       console.log(error.message);
       res.redirect('/404');
