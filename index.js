@@ -56,6 +56,8 @@
 const express = require('express');
 const hbs = require('express-handlebars');
 const session = require('express-session');
+const { body } = require('express-validator');
+
 
 // -- local modules
 const initDb = require('./models/index');
@@ -132,7 +134,16 @@ async function start() {
 
   app.route('/register')
     .get(auth.registerGet)
-    .post(auth.registerPost);
+    .post(
+      body('username')
+        .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')
+        .isAlphanumeric().withMessage('Username can only contain letters and numbers'),
+      body('password')
+        .notEmpty().withMessage('Password is required')
+        .isLength({ min: 6, max: 20 }).withMessage('Password must be between 6 and 20 characters long'),
+      body('repeatPassword')
+        .custom((value, { req }) => value == req.body.password).withMessage('Passwords don\'t match'),
+      auth.registerPost);
 
   app.route('/login')
     .get(auth.loginGet)
