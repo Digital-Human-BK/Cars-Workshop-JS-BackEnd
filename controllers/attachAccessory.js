@@ -17,7 +17,7 @@ module.exports = {
       const availableAcc = accessories.filter(a => existingIds.includes(a.id.toString()) == false);
 
       res.render('attachAccessory', { title: 'Attach Accessory', car, accessories: availableAcc });
-    } catch (error) {
+    } catch (e) {
       res.redirect('404');
     }
   },

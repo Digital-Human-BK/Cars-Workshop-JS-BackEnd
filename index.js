@@ -76,7 +76,7 @@ const del = require('./controllers/delete');
 const edit = require('./controllers/edit');
 const accessory = require('./controllers/accessory');
 const attachAccessory = require('./controllers/attachAccessory');
-const auth = require('./controllers/auth');
+const authController = require('./controllers/auth');
 const { notFound } = require('./controllers/notFound');
 
 start();
@@ -132,24 +132,7 @@ async function start() {
     .get(isLoggedIn(), attachAccessory.get)
     .post(isLoggedIn(), attachAccessory.post);
 
-  app.route('/register')
-    .get(auth.registerGet)
-    .post(
-      body('username')
-        .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long')
-        .isAlphanumeric().withMessage('Username can only contain letters and numbers'),
-      body('password')
-        .notEmpty().withMessage('Password is required')
-        .isLength({ min: 6, max: 20 }).withMessage('Password must be between 6 and 20 characters long'),
-      body('repeatPassword')
-        .custom((value, { req }) => value == req.body.password).withMessage('Passwords don\'t match'),
-      auth.registerPost);
-
-  app.route('/login')
-    .get(auth.loginGet)
-    .post(auth.loginPost)
-
-  app.get('/logout', auth.logoutGet);
+  app.use(authController);
 
   app.all('*', notFound);
 

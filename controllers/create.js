@@ -1,9 +1,8 @@
+const { mapError } = require("../services/util");
+
 module.exports = {
   get(req, res) {
-
-    res.render('create', {
-      title: 'Create Listing'
-    });
+    res.render('create', { title: 'Create Listing' });
   },
   async post(req, res) {
     const car = {
@@ -15,10 +14,12 @@ module.exports = {
     }
     try {
       await req.storage.createCar(car);
+
       res.redirect('/');
-    } catch (error) {
-      console.log('Error creating record. Name field reqired');
-      res.redirect('/');
+
+    } catch (e) {
+      res.locals.errors = mapError(e);
+      res.render('create', { title: 'Create Listing', car});
     }
   }
 };

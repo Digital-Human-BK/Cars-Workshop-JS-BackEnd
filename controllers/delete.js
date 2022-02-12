@@ -27,7 +27,7 @@ module.exports = {
       } else {
         res.redirect('/login');
       };
-    } catch (error) {
+    } catch (e) {
       console.log('Attempted to delete non-existent Id', id);
       res.redirect('/404');
     }

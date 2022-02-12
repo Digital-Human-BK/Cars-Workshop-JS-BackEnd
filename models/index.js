@@ -10,7 +10,8 @@ async function init() {
   try {
     await mongoose.connect(connectionString, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      autoIndex: false
     });
     console.log('Database connected');
 

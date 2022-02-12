@@ -34,8 +34,8 @@ module.exports = {
         res.redirect('/login');
       };
 
-    } catch (error) {
-      console.log(error.message);
+    } catch (e) {
+      console.log(e.message);
       res.redirect('/404');
     }
   }
